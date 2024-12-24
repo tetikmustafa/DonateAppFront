@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bağış Listesi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+        }
+        .donation-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .donation-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .donation-card:hover {
+            transform: translateY(-5px);
+        }
+        .donation-card h3 {
+            margin: 0 0 10px;
+        }
+        .donation-card p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bağış Listesi</h1>
+        <div class="donation-list" id="donation-list">
+            <!-- Bağış kartları buraya dinamik olarak eklenecek -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('http://localhost:8080/api/donors/donorDetailsWithDonations')  // Spring Boot API endpoint
+                .then(response => response.json())
+                .then(data => {
+                    const listContainer = document.getElementById('donation-list');
+                    listContainer.innerHTML = '';  // Önce temizle
+
+                    data.forEach(donation => {
+                        const card = document.createElement('div');
+                        card.className = 'donation-card';
+                        card.innerHTML = `
+                            <h3>${donation[0]} ${donation[1]}</h3>
+                            <p>Email: ${donation[2]}</p>
+                            <p>Bağış Türü: ${donation[3]}</p>
+                            <p>Tarih: ${donation[4]}</p>
+                            <p>Miktar: ${donation[5]} ${donation[6]}</p>
+                        `;
+                        listContainer.appendChild(card);
+                    });
+                })
+                .catch(error => console.error('Veri çekilirken hata oluştu:', error));
+        });
+    </script>
+</body>
+</html>

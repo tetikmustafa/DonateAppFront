@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donör Listesi</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    margin: 50px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Donör Listesi</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ad</th>
+                    <th>Soyad</th>
+                    <th>Metot</th>
+                </tr>
+            </thead>
+            <tbody id="donorTableBody">
+                <!-- Veriler buraya eklenecek -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        fetch("http://localhost:8080/api/donors/donorsWithDonationMethods")
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.getElementById("donorTableBody");
+                data.forEach(donor => {
+                    let row = `<tr>
+                        <td>${donor[0]}</td>
+                        <td>${donor[1]}</td>
+                        <td>${donor[2]}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            })
+            .catch(error => console.error("Veri çekilirken hata oluştu:", error));
+    </script>
+</body>
+</html>
