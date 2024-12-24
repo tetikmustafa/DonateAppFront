@@ -172,13 +172,13 @@ header nav ul li a:hover{
     justify-content: space-between;
     margin-top: 50px;
     position: relative;
-    height: 245px;
+    height: 500px;
 }
 
 #aboutSection .cards > div {
-    width: 350px;
     background-color: var(--gray);
     padding: 35px;
+    margin-bottom: 20px;
     color: #444;
     text-align: center;
     border-radius: 5px;
@@ -188,8 +188,7 @@ header nav ul li a:hover{
 }
 
 #aboutSection .cards > div:hover{
-    width: 400px;
-    margin-top: -20px;
+    margin-top: 20px;
     border-color: var(--themeRed);
     padding: 55px;
     height: auto;
